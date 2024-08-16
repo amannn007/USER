@@ -1,0 +1,50 @@
+<!-- data-list.component.html -->
+<h1>User Data with Predefined Details</h1>
+
+<!-- Search Input -->
+<input type="text" placeholder="Search by Name or Email" [(ngModel)]="searchQuery" (input)="filterData()" />
+
+<table border="1" cellpadding="10" cellspacing="0">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th (click)="sortByName()" style="cursor: pointer;">
+        Name
+        <span *ngIf="sortAscending">&#9650;</span>
+        <span *ngIf="!sortAscending">&#9660;</span>
+      </th>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Job</th>
+      <th>Mobile</th>
+      <th>Skills</th>
+      <th>Education</th>
+      <th>Address</th>
+      <th>Edit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of paginatedData">
+      <td>{{ user.id }}</td>
+      <td>{{ user.name }}</td>
+      <td>{{ user.username }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.job }}</td>
+      <td>{{ user.mobile }}</td>
+      <td>{{ user.skill }}</td>
+      <td>{{ user.education }}</td>
+      <td>{{ user.fullAddress }}</td>
+      <td>
+        <button (click)="openEditForm(user)">Edit</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Show More Button -->
+<div *ngIf="filteredData.length > paginatedData.length">
+  <button (click)="showMore()">Show More</button>
+</div>
+
+<!-- Edit Modal -->
+<app-edit-modal *ngIf="showEditForm" [user]="selectedUser" (save)="saveChanges($event)" (cancel)="cancelEdit()"></app-edit-modal>
